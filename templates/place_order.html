@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Place Order</title>
+    <style>
+        body { font-family: Arial, sans-serif; padding: 20px; background-color: #f2f2f2; }
+        .form-container {
+            background: white; padding: 20px; border-radius: 10px; max-width: 500px; margin: auto;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+        input, select, button {
+            width: 100%; padding: 10px; margin: 10px 0; border-radius: 5px;
+            border: 1px solid #ccc; font-size: 16px;
+        }
+        button { background-color: #4CAF50; color: white; border: none; cursor: pointer; }
+        button:disabled { background-color: #ccc; }
+        h2 { text-align: center; }
+        .note { color: gray; font-size: 14px; }
+    </style>
+</head>
+<body>
+
+<div class="form-container">
+    <h2>Place Order</h2>
+    <form method="POST">
+        <label for="service">Select Service:</label>
+        <select id="service" name="service" required onchange="updateRate()">
+            <option value="tiktok_likes">TikTok Likes</option>
+            <option value="tiktok_followers">TikTok Followers</option>
+            <option value="youtube_views">YouTube Views</option>
+            <option value="instagram_followers">Instagram Followers</option>
+        </select>
+
+        <label for="link">Paste Link:</label>
+        <input type="url" id="link" name="link" placeholder="Paste post/profile link" required>
+
+        <label for="quantity">Quantity:</label>
+        <input type="number" id="quantity" name="quantity" min="1" value="10" required oninput="updateCoinsRequired()">
+
+        <p class="note">Coins Required: <strong id="coinsDisplay">10</strong></p>
+        <input type="hidden" id="coins_required" name="coins_required" value="10">
+
+        <button type="submit" id="submitBtn">Place Order</button>
+    </form>
+    <p class="note">Your current balance: <strong>{{ user.coins }}</strong> coins</p>
+</div>
+
+<script>
+    const rates = {
+        tiktok_likes: 1,
+        tiktok_followers: 2,
+        youtube_views: 1,
+        instagram_followers: 2
+    };
+
+    const userCoins = {{ user.coins }};
+    function updateRate() {
+        updateCoinsRequired();
+    }
+
+    function updateCoinsRequired() {
+        const service = document.getElementById('service').value;
+        const quantity = parseInt(document.getElementById('quantity').value) || 0;
+        const rate = rates[service];
+        const coins = quantity * rate;
+        document.getElementById('coins_required').value = coins;
+        document.getElementById('coinsDisplay').textContent = coins;
+
+        // Disable button if coins not enough
+        const submitBtn = document.getElementById('submitBtn');
+        if (coins > userCoins || coins === 0) {
+            submitBtn.disabled = true;
+        } else {
+            submitBtn.disabled = false;
+        }
+    }
+
+    updateCoinsRequired();
+</script>
+
+</body>
+</html>

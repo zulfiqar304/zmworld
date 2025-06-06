@@ -1,0 +1,11 @@
+{% extends 'layout.html' %}
+{% block content %}
+<h2 class="text-xl font-bold mb-4">Register</h2>
+<form method="POST" class="bg-white p-6 rounded shadow-md space-y-4">
+    <input name="username" type="text" placeholder="Username" required class="w-full p-2 border rounded" />
+    <input name="email" type="email" placeholder="Email" required class="w-full p-2 border rounded" />
+    <input name="password" type="password" placeholder="Password" required class="w-full p-2 border rounded" />
+    <input name="referral" type="text" placeholder="Referral Code (optional)" value="{{ referral or '' }}" class="w-full p-2 border rounded" />
+    <button type="submit" class="w-full bg-blue-600 text-white py-2 rounded">Register</button>
+</form>
+{% endblock %}

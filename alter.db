@@ -1,0 +1,10 @@
+from main import db  # Import db from your main Flask app file
+
+def alter_order_table():
+    sql = 'ALTER TABLE "order" ADD COLUMN coins_required INTEGER DEFAULT 0;'
+    with db.engine.connect() as connection:
+        connection.execute(sql)
+    print("Column 'coins_required' added successfully.")
+
+if __name__ == "__main__":
+    alter_order_table()

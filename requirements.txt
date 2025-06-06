@@ -1,0 +1,7 @@
+flask
+flask
+jsonify
+flask-sqlalchemy
+flask
+flask-sqlalchemy
+werkzeug

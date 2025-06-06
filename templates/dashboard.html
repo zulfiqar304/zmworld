@@ -1,0 +1,187 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard - ZMWORLD</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        .gradient-bg {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        }
+        .card-hover {
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+        .card-hover:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+        }
+        .coin-animation {
+            animation: bounce 2s infinite;
+        }
+        @keyframes bounce {
+            0%, 20%, 50%, 80%, 100% {
+                transform: translateY(0);
+            }
+            40% {
+                transform: translateY(-10px);
+            }
+            60% {
+                transform: translateY(-5px);
+            }
+        }
+    </style>
+</head>
+<body class="bg-gray-50 min-h-screen">
+    <!-- Header -->
+    <div class="gradient-bg text-white py-6 mb-8">
+        <div class="container mx-auto px-4">
+            <div class="flex justify-between items-center">
+                <div>
+                    <h1 class="text-3xl font-bold">👋 Welcome back, {{ user.username }}!</h1>
+                    <p class="text-blue-100 mt-2">Ready to boost your social media presence?</p>
+                </div>
+                <div class="text-right">
+                    <a href="{{ url_for('logout') }}" class="bg-white bg-opacity-20 hover:bg-opacity-30 px-4 py-2 rounded-lg transition duration-200">
+                        🚪 Logout
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="container mx-auto px-4">
+        <!-- User Info Cards -->
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
+            <!-- Profile Card -->
+            <div class="bg-white rounded-xl shadow-lg p-6 card-hover">
+                <div class="flex items-center mb-4">
+                    <div class="bg-blue-100 p-3 rounded-full mr-4">
+                        <span class="text-2xl">👤</span>
+                    </div>
+                    <div>
+                        <h3 class="text-lg font-semibold text-gray-800">Profile</h3>
+                        <p class="text-gray-600">Account Information</p>
+                    </div>
+                </div>
+                <div class="space-y-2">
+                    <p class="flex items-center text-gray-700">
+                        <span class="mr-2">📧</span>
+                        <strong class="mr-2">Email:</strong> 
+                        <span class="text-blue-600">{{ user.email }}</span>
+                    </p>
+                </div>
+            </div>
+
+            <!-- Coins Card -->
+            <div class="bg-gradient-to-br from-yellow-400 to-orange-500 rounded-xl shadow-lg p-6 text-white card-hover">
+                <div class="flex items-center justify-between mb-4">
+                    <div>
+                        <h3 class="text-lg font-semibold">Your Balance</h3>
+                        <p class="text-yellow-100">Available Coins</p>
+                    </div>
+                    <div class="coin-animation">
+                        <span class="text-4xl">🪙</span>
+                    </div>
+                </div>
+                <div class="text-center">
+                    <p class="text-4xl font-bold mb-2">{{ user.coins }}</p>
+                    <p class="text-yellow-100">💰 Coins Available</p>
+                </div>
+            </div>
+
+            <!-- Quick Stats Card -->
+            <div class="bg-white rounded-xl shadow-lg p-6 card-hover">
+                <div class="flex items-center mb-4">
+                    <div class="bg-green-100 p-3 rounded-full mr-4">
+                        <span class="text-2xl">📊</span>
+                    </div>
+                    <div>
+                        <h3 class="text-lg font-semibold text-gray-800">Quick Stats</h3>
+                        <p class="text-gray-600">Account Overview</p>
+                    </div>
+                </div>
+                <div class="space-y-3">
+                    <div class="flex justify-between items-center">
+                        <span class="text-gray-600">🎯 Status:</span>
+                        <span class="bg-green-100 text-green-800 px-3 py-1 rounded-full text-sm font-medium">Active</span>
+                    </div>
+                    <div class="flex justify-between items-center">
+                        <span class="text-gray-600">⭐ Level:</span>
+                        <span class="text-blue-600 font-semibold">Premium</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Action Cards -->
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+            <!-- Place Order Card -->
+            <div class="bg-white rounded-xl shadow-lg p-8 card-hover">
+                <div class="text-center">
+                    <div class="bg-blue-100 w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-4">
+                        <span class="text-3xl">🛒</span>
+                    </div>
+                    <h3 class="text-xl font-bold text-gray-800 mb-2">Place New Order</h3>
+                    <p class="text-gray-600 mb-6">Choose from our premium social media services</p>
+                    <a href="{{ url_for('place_order') }}" 
+                       class="inline-block bg-gradient-to-r from-blue-500 to-blue-600 text-white px-8 py-3 rounded-lg hover:from-blue-600 hover:to-blue-700 transition duration-200 font-semibold shadow-lg">
+                        🚀 Start Order
+                    </a>
+                </div>
+            </div>
+
+            <!-- Order History Card -->
+            <div class="bg-white rounded-xl shadow-lg p-8 card-hover">
+                <div class="text-center">
+                    <div class="bg-green-100 w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-4">
+                        <span class="text-3xl">📋</span>
+                    </div>
+                    <h3 class="text-xl font-bold text-gray-800 mb-2">Order History</h3>
+                    <p class="text-gray-600 mb-6">Track your previous orders and their status</p>
+                    <a href="{{ url_for('order_history') }}" 
+                       class="inline-block bg-gradient-to-r from-green-500 to-green-600 text-white px-8 py-3 rounded-lg hover:from-green-600 hover:to-green-700 transition duration-200 font-semibold shadow-lg">
+                        📈 View History
+                    </a>
+                </div>
+            </div>
+        </div>
+
+        <!-- Services Preview -->
+        <div class="mt-8 bg-white rounded-xl shadow-lg p-6">
+            <h3 class="text-xl font-bold text-gray-800 mb-4 flex items-center">
+                <span class="mr-2">🎯</span>
+                Available Services
+            </h3>
+            <div class="grid grid-cols-2 md:grid-cols-5 gap-4">
+                <div class="text-center p-3 bg-pink-50 rounded-lg">
+                    <span class="text-2xl block mb-1">📸</span>
+                    <p class="text-sm font-medium text-gray-700">Instagram</p>
+                </div>
+                <div class="text-center p-3 bg-red-50 rounded-lg">
+                    <span class="text-2xl block mb-1">📺</span>
+                    <p class="text-sm font-medium text-gray-700">YouTube</p>
+                </div>
+                <div class="text-center p-3 bg-blue-50 rounded-lg">
+                    <span class="text-2xl block mb-1">📘</span>
+                    <p class="text-sm font-medium text-gray-700">Facebook</p>
+                </div>
+                <div class="text-center p-3 bg-gray-50 rounded-lg">
+                    <span class="text-2xl block mb-1">🎵</span>
+                    <p class="text-sm font-medium text-gray-700">TikTok</p>
+                </div>
+                <div class="text-center p-3 bg-cyan-50 rounded-lg">
+                    <span class="text-2xl block mb-1">🐦</span>
+                    <p class="text-sm font-medium text-gray-700">Twitter</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Footer -->
+        <div class="mt-8 text-center text-gray-500 pb-8">
+            <p>💡 Need more coins? Daily login bonus: <strong>+5 coins</strong></p>
+        </div>
+    </div>
+</body>
+</html>
